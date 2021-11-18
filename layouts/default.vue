@@ -1,19 +1,25 @@
 <template>
-  <div class="p-4 sm:p-8 min-h-screen bg-sky-200 flex">
-    <div class="container p-4 sm:p-8 mx-auto rounded-2xl bg-gray-50 leading-loose text-gray-600">
-      <slot/>
+  <div class="flex w-full h-screen">
+    <layout-sidebar class="w-44 h-full" />
+    <div id="body" class="flex-1 p-6 overflow-y-scroll">
+      <slot />
     </div>
   </div>
 </template>
 
+<script>
+export default {
+  name: "DefaultLayout",
+};
+</script>
+
 <style>
-div.container > div > h1,
-div.container > div > h2,
-div.container > div > h3,
-div.container > div > h4,
-div.container > div > h5,
-div.container > div > h6,
-div.container > div > p {
-  @apply py-4 px-6;
+html {
+  word-spacing: 1px;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  box-sizing: border-box;
 }
 </style>
