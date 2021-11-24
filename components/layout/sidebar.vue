@@ -173,54 +173,14 @@
           </a>
         </div>
       </div>
-
-      <div class="w-full px-2">
-        <div
-          class="
-            flex flex-col
-            items-center
-            w-full
-            mt-3
-            border-t border-gray-700
-          "
-        >
-          <div class="item-contry active">
-            <img
-              class="h-4 w-6 ml-2"
-              :src="`https://flagcdn.com/w40/${selectedContry.flag}.png`"
-            />
-            <span class="ml-2 text-sm font-medium">
-              {{ selectedContry.label }}
-            </span>
-          </div>
-        </div>
-      </div>
     </div>
   </aside>
 </template>
 
-<script>
-export default {
-  name: "SideBar",
-  setup(props) {
-    const { countries, getSelectedContry, setSelectedCountry } = useCountry();
-    return {
-      countries,
-      getSelectedContry,
-      setSelectedCountry,
-    };
-  },
-  computed: {
-    async selectedContry() {
-      return await this.getSelectedContry();
-    },
-  },
-  methods: {
-    isActive(name) {
-      return this.$route.path.toString().split("/").includes(name);
-    },
-  },
-};
+<script setup>
+import { useRoute } from "vue-router";
+const $route = useRoute();
+const isActive = (name) => $route.path.toString().split("/").includes(name);
 </script>
 
 <style>

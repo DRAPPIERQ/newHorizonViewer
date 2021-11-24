@@ -1,8 +1,8 @@
 <template>
   <div class="flex w-full h-screen">
     <layout-sidebar class="w-44 h-full" />
-    <div id="body" class="flex-1 p-6 overflow-y-scroll">
-      <slot />
+    <div id="body" class="flex-1 bg-gray-100 p-6 overflow-y-scroll">
+      <slot class="bg-gray-50" />
     </div>
   </div>
 </template>

@@ -10,5 +10,7 @@
     "nuxt-windicss": "^2.0.0",
     "nuxt3": "latest"
   },
-  "dependencies": {}
+  "dependencies": {
+    "date-fns": "^2.26.0"
+  }
 }
