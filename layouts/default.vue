@@ -25,4 +25,18 @@ html {
   -webkit-font-smoothing: antialiased;
   box-sizing: border-box;
 }
+
+.loading-animation {
+  @apply bg-blueGray-50 border-2 border-blueGray-600 rounded-full;
+  animation: loading-animation 1.4s ease-out infinite;
+}
+@keyframes loading-animation {
+  0% {
+    transform: rotate(0deg);
+  }
+  60%,
+  100% {
+    transform: rotate(-360deg);
+  }
+}
 </style>

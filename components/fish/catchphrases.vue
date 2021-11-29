@@ -25,28 +25,20 @@
   </div>
 </template>
 
-<script>
-export default defineComponent({
-  props: {
-    catchphrases: {
-      type: Array,
-      default: () => [],
-    },
+<script setup>
+// Props
+const props = defineProps({
+  catchphrases: {
+    type: Array,
+    default: () => [],
   },
-  setup() {
-    const catchphrasesRef = ref(null);
-    let needScrollbar = computed(() => {
-      if (!catchphrasesRef.value) return false;
-      return (
-        catchphrasesRef.value.scrollHeight > catchphrasesRef.value.clientHeight
-      );
-    });
-
-    return {
-      catchphrasesRef,
-      needScrollbar,
-    };
-  },
+});
+const catchphrasesRef = ref(null);
+let needScrollbar = computed(() => {
+  if (!catchphrasesRef.value) return false;
+  return (
+    catchphrasesRef.value.scrollHeight > catchphrasesRef.value.clientHeight
+  );
 });
 </script>
 
