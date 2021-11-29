@@ -4,8 +4,8 @@
       flex flex-col
       items-center
       overflow-hidden
-      text-gray-400
-      bg-gray-900
+      text-blueGray-400
+      bg-blueGray-900
       rounded-r
     "
   >
@@ -30,7 +30,7 @@
             items-center
             w-full
             mt-3
-            border-t border-gray-700
+            border-t border-blueGray-700
           "
         >
           <a
@@ -185,12 +185,9 @@ const isActive = (name) => $route.path.toString().split("/").includes(name);
 
 <style>
 .item {
-  @apply flex items-center w-full h-12 px-3 mt-2 rounded hover:bg-gray-700 hover:text-gray-300 cursor-pointer;
-}
-.item-contry {
-  @apply flex items-center w-full h-12 px-3 mt-2;
+  @apply flex items-center w-full h-12 px-3 mt-2 rounded hover:bg-blueGray-700 hover:text-blueGray-300 cursor-pointer;
 }
 .item.active {
-  @apply bg-gray-700 text-gray-300;
+  @apply bg-blueGray-700 text-blueGray-300;
 }
 </style>

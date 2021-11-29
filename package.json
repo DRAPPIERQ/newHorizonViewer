@@ -7,10 +7,9 @@
   },
   "devDependencies": {
     "@vueuse/core": "^6.8.0",
+    "@windicss/plugin-scrollbar": "^1.2.3",
     "nuxt-windicss": "^2.0.0",
-    "nuxt3": "latest"
-  },
-  "dependencies": {
-    "date-fns": "^2.26.0"
+    "nuxt3": "latest",
+    "patch-vue-directive-ssr": "^0.0.1"
   }
 }
