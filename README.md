@@ -5,7 +5,6 @@ Documents
 * [Nuxt 3](https://v3.nuxtjs.org)
 * [VueUse](https://vueuse.org/)
 * [Windi CSS](https://windicss.org/)
-* [Pinia](https://pinia.esm.dev/) (switch `pinia` branch)
 
 ## Clone
 
