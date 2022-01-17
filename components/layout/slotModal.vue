@@ -90,54 +90,53 @@
   </div>
 </template>
 
-<script>
-export default defineComponent({
-  name: "Fish DataTable",
-  directives: {
-    clickOutside: useClickOutside(),
+<script setup>
+// Props
+const props = defineProps({
+  showModal: {
+    type: Boolean,
+    default: false,
   },
-  props: {
-    showModal: {
-      type: Boolean,
-      default: false,
-    },
-    disableFinish: {
-      type: Boolean,
-      default: false,
-    },
-  },
-  watch: {
-    showModal(newValue) {
-      if (newValue) {
-        const self = this;
-        setTimeout(() => {
-          self.clickOutsideReady = true;
-        }, 500);
-      } else {
-        this.clickOutsideReady = false;
-      }
-    },
-  },
-  setup(props, { emit }) {
-    let clickOutsideReady = ref(false);
-    return {
-      clickOutsideReady,
-      clickOutside: () => {
-        if (props.showModal && clickOutsideReady.value) {
-          emit("click:outside");
-        }
-      },
-      finish: () => {
-        if (!props.disableFinish) {
-          emit("finish");
-        }
-      },
-      cancel: () => {
-        emit("cancel");
-      },
-    };
+  disableFinish: {
+    type: Boolean,
+    default: false,
   },
 });
+// Emits
+const emit = defineEmits(["clickOutside", "finish", "cancel"]);
+// watch showModal
+watch(
+  () => props.showModal,
+  (newValue) => {
+    if (newValue) {
+      setTimeout(() => {
+        clickOutsideReady.value = true;
+      }, 500);
+    } else {
+      clickOutsideReady.value = false;
+    }
+  }
+);
+// clickOutsideDirective
+const vClickOutside = useClickOutside();
+// clickOutsideReady
+let clickOutsideReady = ref(false);
+
+const clickOutside = () => {
+  if (props.showModal && clickOutsideReady.value) {
+    emit("clickOutside");
+  }
+};
+
+const finish = () => {
+  if (!props.disableFinish) {
+    emit("finish");
+  }
+};
+
+const cancel = () => {
+  emit("cancel");
+};
 </script>
 
 <style></style>

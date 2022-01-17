@@ -7,13 +7,12 @@
       :more-options="moreFilter"
     />
     {{ filters }}
-    {{ moreFilter }}
     <div
       v-if="!pending"
       class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 my-4"
     >
       <div
-        v-for="item in sortItems"
+        v-for="item in filterItems"
         :key="item.number"
         class="bg-white flex flex-col rounded-md shadow-md p-2"
       >
@@ -39,7 +38,7 @@
             flex flex-row
             items-center
             justify-center
-            divide-x divide-blueGray-400
+            divide-x divide-blueGray-600
             p-1
             mt-2
           "
@@ -176,10 +175,10 @@
         </div>
       </div>
     </div>
-    <layout-paginate-footer
+    <!-- <layout-paginate-footer
       class="bg-white md:col-start-2"
       v-if="!noPaginate"
-    />
+    /> -->
   </div>
 </template>
 
@@ -198,7 +197,7 @@ const props = defineProps({
 
 // Fetch data
 const { GET, AcnhOptions } = useApiEnv();
-const { pending, error, data } = useFetch("nh/fish", {
+const { pending, error, data } = useFetch('nh/fish', {
   method: GET,
   baseURL: AcnhOptions.baseURL,
   headers: AcnhOptions.headers,
@@ -211,11 +210,29 @@ const sortItems = computed(() =>
 
 // Filters
 const filters = ref({
-  search: "",
-  more: [],
+  search: '',
+  more: {},
 });
 const monthRange = useFilterMonthRange();
 const moreFilter = ref([monthRange]);
+
+// Filter sorted items
+const filterItems = computed(() => {
+  const { search, more } = filters.value;
+  const items = sortItems.value;
+  if (search != '') {
+    items = items.filter((item) =>
+      item.name.toLowerCase().includes(search.toLowerCase())
+    );
+  }
+  Object.values(more).forEach((value) => {
+    console.log(value.slug, value.value);
+    if (value.type == 'time-range') {
+      console.log(monthRange.getRange(value.value.from.id, value.value.to.id));
+    }
+  });
+  return items;
+});
 </script>
 
 <style></style>

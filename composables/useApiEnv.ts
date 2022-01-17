@@ -6,7 +6,7 @@ export default function () {
         DELETE: 'DELETE',
         PATCH: 'PATCH',
     }
-    const AcnhOptions: Object = {
+    const AcnhOptions = {
         baseURL: 'https://api.nookipedia.com/',
         headers: {
             'X-API-KEY': 'fd2b4786-f817-48a3-a286-a43a039ada6c',
