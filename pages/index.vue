@@ -1,17 +1,12 @@
 <template>
-  <div>
+  <NuxtLayout name="default">
     <div>Page acceuil</div>
     <div>Timeline twitter Animal Crossing New Horrizon</div>
-  </div>
+  </NuxtLayout>
 </template>
-<script>
-export default {
-  layout: "default",
-  mounted() {
-    // Temp redirection
-    this.$router.push("/villagers");
-  },
-};
+<script setup>
+// Define page name
+const pageTitle = useTitle('ACNH Database');
 </script>
 
 <style></style>

@@ -1,11 +1,12 @@
 <template>
-  <div>Songs</div>
+  <NuxtLayout name="default">
+    <div>Songs</div>
+  </NuxtLayout>
 </template>
 
-<script>
-export default {
-  layout: "default",
-};
+<script setup>
+// Define page name
+const pageTitle = useTitle('Songs | ACNH Database');
 </script>
 
 <style></style>
