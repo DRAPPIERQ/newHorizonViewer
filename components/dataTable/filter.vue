@@ -19,55 +19,42 @@
         id="search"
         name="search"
         type="text"
-        v-model="filters.search"
-        placeholder="Research a fish ..."
-        class="
-          flex-1
-          placeholder-blueGray-400
-          text-blueGray-800
-          rounded
-          p-2
-          h-10
-          focus:outline-none
+        class="flex-1 placeholder-blueGray-400 text-blueGray-800 rounded p-2 h-10 focus:outline-none"
+        :class="search ? '' : 'font-ligth'"
+        :value="search"
+        :placeholder="placeholder"
+        @input="
+          (e) => {
+            search = e.target.value;
+            emit('update:filters', {
+              ...props.filters,
+              search,
+            });
+          }
         "
-        :class="filters.search ? '' : 'font-ligth'"
       />
     </div>
-    <data-table-filter-more
-      v-model:moreFilters="filters.more"
-      :options="moreOptions"
-    />
   </div>
 </template>
 
-<script>
-import { defineComponent } from "vue";
-
-export default defineComponent({
-  name: "DataTable Filters",
-  model: {
-    prop: "filters",
-    event: "update:filters",
+<script setup>
+// Props
+const props = defineProps({
+  filters: {
+    type: Object,
+    default: () => ({
+      search: '',
+    }),
   },
-  props: {
-    filters: {
-      type: Object,
-      default: () => ({}),
-    },
-    moreOptions: {
-      type: Array,
-      default: () => [],
-    },
-  },
-  watch: {
-    filters: {
-      immediate: true,
-      handler(newFilters) {
-        this.$emit("update:filters", newFilters);
-      },
-    },
+  placeholder: {
+    type: String,
+    default: 'Research what you want ...',
   },
 });
+// Emits
+const emit = defineEmits(['update:filters']);
+// Refs
+const search = ref(props.filters.search || '');
 </script>
 
 <style></style>

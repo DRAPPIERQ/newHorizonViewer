@@ -1,11 +1,12 @@
 <template>
-  <div>Arts</div>
+  <NuxtLayout name="default">
+    <div>Arts</div>
+  </NuxtLayout>
 </template>
 
-<script>
-export default {
-  layout: "default",
-};
+<script setup>
+// Define page name
+const pageTitle = useTitle('Arts | ACNH Database');
 </script>
 
 <style></style>

@@ -1,11 +1,12 @@
 <template>
-  <div>Fossils</div>
+  <NuxtLayout name="default">
+    <div>Fossils</div>
+  </NuxtLayout>
 </template>
 
-<script>
-export default {
-  layout: "default",
-};
+<script setup>
+// Define page name
+const pageTitle = useTitle('Fossils | ACNH Database');
 </script>
 
 <style></style>
