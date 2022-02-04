@@ -11,5 +11,6 @@
     "nuxt-windicss": "^2.0.0",
     "nuxt3": "^3.0.0-27394404.1672148",
     "patch-vue-directive-ssr": "^0.0.1"
-  }
+  },
+  "dependencies": {}
 }

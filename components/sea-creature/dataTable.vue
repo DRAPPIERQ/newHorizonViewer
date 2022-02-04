@@ -106,7 +106,7 @@
         <div>
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            class="h-12 w-12 mr-2 text-blueGray-700 loading-animation"
+            class="h-12 w-12 mr-2 text-blueGray-700 animate-loading"
             fill="currentColor"
             viewBox="0 0 128 128"
           >
