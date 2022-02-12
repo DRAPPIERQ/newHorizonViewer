@@ -1,21 +1,10 @@
 <template>
   <div class="flex flex-col">
-    <data-table-filter
-      class="bg-white"
-      v-if="!noFilter"
-      v-model:filters="filters"
-      placeholder="Research a villager ..."
-    />
-    <!-- {{ filters }} -->
     <div
-      v-if="!pending"
-      class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 my-4"
+      v-if="!pending && item"
+      class="grid grid-cols-1 md:grid-cols-3 gap-4 my-4"
     >
-      <div
-        v-for="item in filterItems"
-        :key="item.id"
-        class="bg-white flex flex-col rounded-md shadow-md"
-      >
+      <div class="bg-white flex flex-col rounded-md shadow-md md:col-span-2">
         <!-- Villager Icon -->
         <div
           class="flex flex-col items-center justify-center w-full pb-2 border shadow-md-b"
@@ -102,8 +91,8 @@
         </div>
         <div class="flex flex-col space-y-1 p-2 justify-center">
           <!-- Villager birthday -->
-          
-          <div class="inline-flex items-center justify-center">          
+
+          <div class="inline-flex items-center justify-center">
             <div
               class="inline-flex items-center justify-center text-sm text-blueGray-600 border border-blueGray-400 rounded-full px-8 py-0.5"
             >
@@ -172,10 +161,6 @@
         </div>
       </div>
     </div>
-    <!-- <layout-paginate-footer
-      class="bg-white md:col-start-2"
-      v-if="!noPaginate"
-    /> -->
   </div>
 </template>
 
@@ -183,20 +168,12 @@
 // Props
 const props = defineProps({
   data: {
-    type: Array,
-    default: () => [],
+    type: Object,
+    default: () => ({}),
   },
   pending: {
     type: Boolean,
     default: true,
-  },
-  noFilter: {
-    type: Boolean,
-    default: false,
-  },
-  noPaginate: {
-    type: Boolean,
-    default: false,
   },
 });
 
@@ -215,53 +192,31 @@ const getRgbaColorFromHex = (hex) => {
   return rgba;
 };
 
-// Sort items
-const sortItems = computed(() =>
-  props.data ? props.data.sort((a, b) => a.number - b.number) : []
-);
-
-// Filters
-const filters = ref({
-  search: '',
-});
-
-// Filter sorted items
-const filterItems = computed(() => {
-  const { search } = filters.value;
-  let items = sortItems.value;
-  if (search != '') {
-    items = items.filter((item) =>
-      item.name.toLowerCase().includes(search.toLowerCase())
-    );
+const item = computed(() => {
+  if (!props.pending && props.data) {
+    const color_rgba = getRgbaColorFromHex(props.data.title_color);
+    return {
+      ...props.data,
+      border_color: rgbaToString({
+        r: color_rgba.r - 10,
+        g: color_rgba.g - 10,
+        b: color_rgba.b - 10,
+        a: color_rgba.a - 0.6,
+      }),
+      background_color: rgbaToString({
+        r: color_rgba.r - 10,
+        g: color_rgba.g - 10,
+        b: color_rgba.b - 10,
+        a: color_rgba.a - 0.2,
+      }),
+      text_color: rgbaToString({
+        r: color_rgba.r - 10,
+        g: color_rgba.g - 10,
+        b: color_rgba.b - 10,
+        a: color_rgba.a - 0.2,
+      }),
+    };
   }
-  return items
-    .filter((item) => item.nh_details)
-    .map((item) => {
-      const color_rgba = getRgbaColorFromHex(item.title_color);
-
-      return {
-        ...item,
-        border_color: rgbaToString({
-          r: color_rgba.r - 10,
-          g: color_rgba.g - 10,
-          b: color_rgba.b - 10,
-          a: color_rgba.a - 0.6,
-        }),
-        background_color: rgbaToString({
-          r: color_rgba.r - 10,
-          g: color_rgba.g - 10,
-          b: color_rgba.b - 10,
-          a: color_rgba.a - 0.2,
-        }),
-        text_color: rgbaToString({
-          r: color_rgba.r - 10,
-          g: color_rgba.g - 10,
-          b: color_rgba.b - 10,
-          a: color_rgba.a - 0.2,
-        }),
-      };
-    });
+  return null;
 });
 </script>
-
-<style></style>

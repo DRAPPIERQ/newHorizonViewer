@@ -86,13 +86,8 @@
             <data-table-spawn-months
               :spawns="
                 !item?.isSouth
-                  ? item.times_by_month_north
-                  : item.times_by_month_south
-              "
-              :spawns-availability="
-                !item?.isSouth
-                  ? item.n_availability_array
-                  : item.s_availability_array
+                  ? item.north.times_by_month
+                  : item.south.times_by_month
               "
             />
           </div>
