@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col">
-    <data-table-filter
+    <filter-search
       class="bg-white"
       v-if="!noFilter"
       v-model:filters="filters"
@@ -102,8 +102,8 @@
         </div>
         <div class="flex flex-col space-y-1 p-2 justify-center">
           <!-- Villager birthday -->
-          
-          <div class="inline-flex items-center justify-center">          
+
+          <div class="inline-flex items-center justify-center">
             <div
               class="inline-flex items-center justify-center text-sm text-blueGray-600 border border-blueGray-400 rounded-full px-8 py-0.5"
             >

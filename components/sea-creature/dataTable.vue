@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col">
-    <data-table-filter
+    <filter-search
       class="bg-white"
       v-if="!noFilter"
       v-model:filters="filters"

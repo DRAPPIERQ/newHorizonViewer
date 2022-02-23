@@ -1,12 +1,13 @@
 <template>
-  <div class="flex flex-col">
-    <data-table-filter
+  <div class="relative flex flex-col">
+    <filter-search
       class="bg-white"
       v-if="!noFilter"
       v-model:filters="filters"
       placeholder="Research a fish ..."
-    />
-    <!-- {{ filters }} -->
+    >
+      <filter-grid v-model:filters="filters" />
+    </filter-search>
     <div
       v-if="!pending"
       class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 my-4"
