@@ -2,9 +2,10 @@
   <div class="flex flex-col">
     <div
       v-if="!pending && item"
-      class="grid grid-cols-1 md:grid-cols-3 gap-4 my-4"
+      class="grid grid-cols-1 lg:grid-cols-5 gap-4 my-4"
     >
-      <div class="bg-white flex flex-col rounded-md shadow-md md:col-span-2">
+      <div></div>
+      <div class="bg-white flex flex-col rounded-md shadow-md lg:col-span-3">
         <!-- Villager Icon -->
         <div
           class="flex flex-col items-center justify-center w-full pb-2 border shadow-md-b"
@@ -121,19 +122,16 @@
         <!-- Villager hobbies -->
         <villager-hobby class="flex-1" :hobby="item.nh_details.hobby" />
         <!-- Villager favorite -->
-        <villager-favorite
+        <villager-favorite-list
+          v-if="favDisplay == 'list'"
           :fav-styles="item.nh_details.fav_styles"
           :fav-colors="item.nh_details.fav_colors"
         />
-
-        <div class="inline-flex items-center justify-center p-2 pb-4">
-          <div
-            @click="$router.push(`/villagers/${item.id}`)"
-            class="text-blueGray-600 hover:text-blueGray-400 border border-blueGray-400 hover:border-blueGray-200 cursor-pointer rounded-full px-8 py-0.5"
-          >
-            More information
-          </div>
-        </div>
+        <villager-favorite
+          v-else
+          :fav-styles="item.nh_details.fav_styles"
+          :fav-colors="item.nh_details.fav_colors"
+        />
       </div>
     </div>
     <div v-else class="flex flex-row my-4 justify-center">
@@ -170,6 +168,10 @@ const props = defineProps({
   data: {
     type: Object,
     default: () => ({}),
+  },
+  favDisplay: {
+    type: String,
+    default: 'default',
   },
   pending: {
     type: Boolean,

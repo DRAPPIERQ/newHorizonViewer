@@ -5,8 +5,9 @@
       v-if="!noFilter"
       v-model:filters="filters"
       placeholder="Research a sea creature ..."
-    />
-    <!-- {{ filters }} -->
+    >
+      <filter-grid v-model:filters="filters" />
+    </filter-search>
     <div
       v-if="!pending"
       class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 my-4"
@@ -168,16 +169,30 @@ const sortItems = computed(() =>
 // Filters
 const filters = ref({
   search: '',
+  months: null,
 });
 
 // Filter sorted items
 const filterItems = computed(() => {
-  const { search } = filters.value;
+  const { search, months } = filters.value;
   let items = sortItems.value;
   if (search != '') {
     items = items.filter((item) =>
       item.name.toLowerCase().includes(search.toLowerCase())
     );
+  }
+  if (months && months.values[0]?.id && months.values[1]?.id) {
+    items = items.filter((item) => {
+      return months
+        .getMonthRange()
+        .map((i) =>
+          [...(months.isSouth ? item.south : item.north).months_array].includes(
+            i
+          )
+        )
+        .includes(true);
+    });
+    items.forEach((item) => (item.isSouth = months.isSouth ?? false));
   }
   return items;
 });

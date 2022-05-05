@@ -5,6 +5,7 @@
     @click="() => emit('click')"
   >
     <svg
+      v-if="!filters.months"
       xmlns="http://www.w3.org/2000/svg"
       class="h-4 w-4 mr-1"
       fill="none"
@@ -18,13 +19,23 @@
         d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
       />
     </svg>
-    <p>Select a month</p>
-  </div>
-  <div
-    v-if="badgeMode"
-    class="inline-flex text-sm text-blueGray-500 hover:text-blueGray-800 border border-blueGray-500 hover:border-blueGray-800 rounded-full px-2 py-0.5 items-center justify-center cursor-none"
-  >
-    {{ month.name }}
+    <div v-else>
+      <img
+        v-if="!filters.months.isSouth"
+        src="~/assets/North.png"
+        class="w-5 h-5 mr-1"
+      />
+      <img
+        v-if="filters.months.isSouth"
+        src="~/assets/South.png"
+        class="w-5 h-5 mr-1"
+      />
+    </div>
+
+    <p v-if="!filters.months">Select a month</p>
+    <p v-else>
+      {{ [...new Set(filters.months.values.map((e) => e.name))].join(' - ') }}
+    </p>
   </div>
   <div
     v-if="formMode"
@@ -46,36 +57,87 @@
         <div class="flex flex-col">
           <p class="text-sm">From</p>
           <select class="rounded p-2 focus:outline-none" @change="selectMonth">
-            <option value="1" selected>January</option>
-            <option value="2">February</option>
-            <option value="3">March</option>
-            <option value="4">April</option>
-            <option value="5">May</option>
-            <option value="6">June</option>
-            <option value="7">July</option>
-            <option value="8">August</option>
-            <option value="9">September</option>
-            <option value="10">October</option>
-            <option value="11">November</option>
-            <option value="12">December</option>
+            <option value="1" :selected="filters.months.values[0].id === 1">
+              January
+            </option>
+            <option value="2" :selected="filters.months.values[0].id === 2">
+              February
+            </option>
+            <option value="3" :selected="filters.months.values[0].id === 3">
+              March
+            </option>
+            <option value="4" :selected="filters.months.values[0].id === 4">
+              April
+            </option>
+            <option value="5" :selected="filters.months.values[0].id === 5">
+              May
+            </option>
+            <option value="6" :selected="filters.months.values[0].id === 6">
+              June
+            </option>
+            <option value="7" :selected="filters.months.values[0].id === 7">
+              July
+            </option>
+            <option value="8" :selected="filters.months.values[0].id === 8">
+              August
+            </option>
+            <option value="9" :selected="filters.months.values[0].id === 9">
+              September
+            </option>
+            <option value="10" :selected="filters.months.values[0].id === 10">
+              October
+            </option>
+            <option value="11" :selected="filters.months.values[0].id === 11">
+              November
+            </option>
+            <option value="12" :selected="filters.months.values[0].id === 12">
+              December
+            </option>
           </select>
         </div>
 
         <div class="flex flex-col">
           <p class="text-sm">To</p>
-          <select class="rounded p-2 focus:outline-none" @change="selectMonth">
-            <option value="1" selected>January</option>
-            <option value="2">February</option>
-            <option value="3">March</option>
-            <option value="4">April</option>
-            <option value="5">May</option>
-            <option value="6">June</option>
-            <option value="7">July</option>
-            <option value="8">August</option>
-            <option value="9">September</option>
-            <option value="10">October</option>
-            <option value="11">November</option>
-            <option value="12">December</option>
+          <select
+            class="rounded p-2 focus:outline-none"
+            @change="selectSecondeMonth"
+          >
+            <option value="1" :selected="filters.months.values[1].id === 1">
+              January
+            </option>
+            <option value="2" :selected="filters.months.values[1].id === 2">
+              February
+            </option>
+            <option value="3" :selected="filters.months.values[1].id === 3">
+              March
+            </option>
+            <option value="4" :selected="filters.months.values[1].id === 4">
+              April
+            </option>
+            <option value="5" :selected="filters.months.values[1].id === 5">
+              May
+            </option>
+            <option value="6" :selected="filters.months.values[1].id === 6">
+              June
+            </option>
+            <option value="7" :selected="filters.months.values[1].id === 7">
+              July
+            </option>
+            <option value="8" :selected="filters.months.values[1].id === 8">
+              August
+            </option>
+            <option value="9" :selected="filters.months.values[1].id === 9">
+              September
+            </option>
+            <option value="10" :selected="filters.months.values[1].id === 10">
+              October
+            </option>
+            <option value="11" :selected="filters.months.values[1].id === 11">
+              November
+            </option>
+            <option value="12" :selected="filters.months.values[1].id === 12">
+              December
+            </option>
           </select>
         </div>
       </div>
@@ -107,7 +169,8 @@ const props = defineProps({
   filters: {
     type: Object,
     default: () => ({
-      months: [],
+      search: '',
+      months: null,
     }),
   },
   month: {
@@ -122,25 +185,29 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
-  badgeMode: {
-    type: Boolean,
-    default: false,
-  },
 });
 // Emits
-const emit = defineEmits(['close', 'click']);
+const emit = defineEmits(['close', 'click', 'update:filters']);
 // Datas
-const monthFilter = useMonthFilter([], false);
+const monthFilter = useMonthFilter([1, 12], false);
+props.filters.months = monthFilter.value;
+emit('update:filters', props.filters);
 
 const selectHemisphere = (e) => {
-  monthFilter.setHemisphere(e.target.value.toLowerCase() === 'south');
+  monthFilter.value.setHemisphere(e.target.value.toLowerCase() === 'south');
+  props.filters.months = monthFilter.value;
+  emit('update:filters', props.filters);
 };
 
 const selectMonth = (e) => {
-  monthFilter.setMonthFrom(e.target.value, 0);
+  monthFilter.value.setMonthFrom(e.target.value, 0);
+  props.filters.months = monthFilter.value;
+  emit('update:filters', props.filters);
 };
 
 const selectSecondeMonth = (e) => {
-  monthFilter.setMonthTo(e.target.value, 1);
+  monthFilter.value.setMonthTo(e.target.value, 1);
+  props.filters.months = monthFilter.value;
+  emit('update:filters', props.filters);
 };
 </script>

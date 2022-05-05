@@ -1,7 +1,7 @@
 <template>
   <NuxtLayout name="default">
     <div class="bg-gray-100">
-      <villager-detail :data="villager" :pending="pending" />
+      <villager-detail :data="villager" :pending="pending" fav-display="list" />
     </div>
   </NuxtLayout>
 </template>
@@ -21,7 +21,7 @@ const { pending, error, data } = useFetch('villagers?game=nh&nhdetails=true', {
 // Return data or empty array
 const villager = computed(() =>
   data.value && route.params.id
-    ? data.value.filter((e) => (e.id = route.params.id))[0]
+    ? data.value.filter((e) => e.id == route.params.id)[0]
     : null
 );
 </script>
